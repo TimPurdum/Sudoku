@@ -1,0 +1,29 @@
+﻿@model Game
+@{
+    ViewData["Title"] = "Index";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <table class="table">
+        @for (var row = 0; row < 9; row++)
+        {
+            <tr>
+                @for (var column = 0; column < 9; column++)
+                {
+                    var box = Model.Boxes.Single(b => b.Row == row && b.Column == column);
+                    <td class="row-@row  column-@column" id="box-@row-@column">
+                        <input class="guess" type="number" value="@box.Answer" onchange="saveGuess(@row, @column, this.value);" />
+                    </td>
+
+                }
+            </tr>
+
+        }
+    </table>
+
+</body>
+</html>
