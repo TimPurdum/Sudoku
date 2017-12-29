@@ -16,5 +16,9 @@ namespace Sudoku.Models
                 return (Column / 3) + ((Row / 3) * 3);
             }
         }
+        public int Index { get {
+                return (Column * 9) + Row;
+            }
+        }
     }
 }

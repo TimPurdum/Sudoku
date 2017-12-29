@@ -11,17 +11,76 @@
     <table class="table">
         @for (var row = 0; row < 9; row++)
         {
-            <tr>
+            var rowClass = "center";
+            switch (row)
+            {
+                case 0:
+                case 3:
+                case 6:
+                    rowClass = "top";
+                    break;
+                case 2:
+                case 5:
+                case 8:
+                    rowClass = "bottom";
+                    break;
+            }
+            <tr class="@rowClass">
                 @for (var column = 0; column < 9; column++)
-                {
-                    var box = Model.Boxes.Single(b => b.Row == row && b.Column == column);
-                    <td class="row-@row  column-@column" id="box-@row-@column">
-                        <input class="guess" type="number" value="@box.Answer" onchange="saveGuess(@row, @column, this.value);" />
-                    </td>
+                        {
+                            var cellClass = "center";
+                            switch (column)
+                            {
+                                case 0:
+                                case 3:
+                                case 6:
+                                    cellClass = "start";
+                                    break;
+                                case 2:
+                                case 5:
+                                case 8:
+                                    cellClass = "end";
+                                    break;
+                            }
+                            var box = Model.Boxes.Single(b => b.Row == row && b.Column == column);
+                            var guess = box.Guess.ToString();
+                            var guessClass = "preset";
+                            if (guess == "0")
+                            {
+                                guess = "";
+                                guessClass = "";
+                            }
+                    <td class="@cellClass @guessClass row-@row  column-@column" id="box-@row-@column">
+                        @if (box.Answer > 0)
+                        {
+                            <input class="guess" type="number" value="@box.Answer" onchange="saveGuess(@row, @column, this.value);" />
+                        }
+                        else
+                        {
+                            var index = 1;
+                            <table>
+                                @for (var r = 0; r < 3; r++)
+                                {
+                                    <tr class="pencil">
+                                        @for (var c = 0; c < 3; c++)
+                                        {
+                                            <td class="pencil">
+                                                @if (box.Pencil.Contains(index))
+                                                {
+                                                    <span>@(index)</span>
+                                                }
+                                            </td>
+                                            index++;
+                                        }
+                                    </tr>
 
+                                }
+                            </table>
+
+                        }
+                    </td>
                 }
             </tr>
-
         }
     </table>
 
