@@ -7,15 +7,15 @@ Current Status: Builds a Sudoku puzzle layout, shows the answers. Each reload wi
 I started out trying to build the algorithm myself, and finally had to go search for some help. So this is based on Daniel Beer's post https://dlbeer.co.nz/articles/sudoku.html.
 
 Models:
-  Game (81 boxes, indexed by row, column, and square)
-    * Box (one writing "square")
-      * Answer
-      * Pencil (List<int> of possible answers)
-      * Guess
-      * Row
-      * Column
-      * Square (group of 9 boxes)
-      * Index (spot in gameboard, based on row and column)
+Game (81 boxes, indexed by row, column, and square)
+* Box (one writing "square")
+  * Answer
+  * Pencil (List<int> of possible answers)
+  * Guess
+  * Row
+  * Column
+  * Square (group of 9 boxes)
+  * Index (spot in gameboard, based on row and column)
     
 Algorithm:
   We use System.Random to generate possible values, and a randomly-ordered array of integers 1-9 to generate a row, column, or square.
