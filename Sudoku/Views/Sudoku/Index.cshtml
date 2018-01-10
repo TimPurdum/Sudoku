@@ -54,7 +54,7 @@
                     <td class="game-cell @cellClass @guessClass row-@row  column-@column" id="box-@row-@column">
                         @if (box.Guess > 0)
                         {
-                            <input class="guess" disabled type="number" value="@box.Guess" />
+                            <input id="square-@row-@column" class="guess" style="background-color: lightgray;" disabled type="number" value="@box.Guess" />
                         }
                         else
                         {
@@ -66,7 +66,7 @@
                                         @for (var c = 0; c < 3; c++)
                                         {
                                             <td class="pencil">
-                                                <button class="btn" onclick="togglePencilMark(this, @index);">_</button>
+                                                <button id="p-@row-@column-@index" class="btn" onclick="togglePencilMark(this, @index);">_</button>
                                             </td>
                                             index++;
                                         }
@@ -74,14 +74,15 @@
 
                                 }
                             </table>
-                            <input class="guess" type="number" value=" " onchange="saveGuess(@row, @column, this);" />
+                            <input id="square-@row-@column" class="guess" type="number" value=" " 
+                                   oninput="saveGuess(@row, @column, this);" onfocus="setSquare(@row, @column);"/>
                         }
                     </td>
                 }
             </tr>
         }
     </table>
-<button class="toggle-pencil btn btn-danger" onclick="togglePencilMode(this);">
+<button id="pencil-toggle-button" class="toggle-pencil btn btn-danger" onclick="togglePencilMode(this);">
     Pencil Toggle
 </button>
 </body>
