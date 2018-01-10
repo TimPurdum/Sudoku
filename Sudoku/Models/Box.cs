@@ -12,13 +12,8 @@ namespace Sudoku.Models
         public int Answer { get; set; }
         public int Guess { get; set; }
         public List<int> Pencil { get; set; }
-        public int Square { get {
-                return (Column / 3) + ((Row / 3) * 3);
-            }
-        }
-        public int Index { get {
-                return (Column * 9) + Row;
-            }
-        }
+        public int Square => (Column / 3) + ((Row / 3) * 3);
+
+        public int Index => (Column * 9) + Row;
     }
 }

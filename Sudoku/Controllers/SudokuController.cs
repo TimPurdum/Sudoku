@@ -12,7 +12,7 @@ namespace Sudoku.Controllers
         int[] Integers = new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         Random Rnd = new Random();
         Game Game;
-        int Seed = 0;
+        int Seed;
         List<int> UsedSeeds = new List<int>();
 
         public IActionResult Index()
@@ -39,7 +39,7 @@ namespace Sudoku.Controllers
                         .OrderBy(i => Rnd.Next()).First();
                     PencilBoxes(fillBoxes);
 
-                    if (fillBoxes.Where(b => b.Answer == 0).Any())
+                    if (fillBoxes.Any(b => b.Answer == 0))
                     {
                         fillBoxes.ForEach(b =>
                         {
@@ -86,19 +86,19 @@ namespace Sudoku.Controllers
             for (var sq = 0; sq < 3; sq++)
             {
                 var boxes = Game.Boxes.Where(b => b.Square == sq).ToList();
-                boxes = PencilBoxes(boxes);
+                PencilBoxes(boxes);
             }
         }
 
         void SetFirstColumn()
         {
             var boxes = Game.Boxes.Where(b => b.Column == 0 && b.Answer == 0).ToList();
-            boxes = PencilBoxes(boxes);
+            PencilBoxes(boxes);
         }
 
         List<Box> PencilBoxes(List<Box> boxes)
         {
-            foreach (Box box in boxes)
+            foreach (var box in boxes)
             {
                 if (box.Answer == 0)
                 {
@@ -115,7 +115,7 @@ namespace Sudoku.Controllers
                 }
             }
 
-            if (boxes.Where(b => b.Pencil.Count > 0).Any())
+            if (boxes.Any(b => b.Pencil.Count > 0))
             {
                 boxes = AnswerBoxes(boxes);
             }
