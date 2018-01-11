@@ -2,7 +2,22 @@
 
 This will be a web-based Sudoku app built with Asp.Net Core 2.0.
 
-Current Status: Builds a Sudoku puzzle layout, shows the answers. Each reload will build a new puzzle.
+Current Status: Builds a Sudoku puzzle layout, gives clues, playable
+
+Done
+* Build
+* Simple random clues
+* User interface (functional, not pretty)
+* Pencil toggle
+* Keyboard shortcuts
+
+To Do
+* Scoring
+* Save games
+* Options (difficulty, hints)
+* Make it look better
+
+## Puzzle Creation
 
 I started out trying to build the algorithm myself, and finally had to go search for some help. So this is based on Daniel Beer's post https://dlbeer.co.nz/articles/sudoku.html.
 
@@ -26,3 +41,7 @@ Algorithm:
   5. Pencil the remaining boxes, then sort by the number of possibilities. Answer starting with the box with the fewest possibilities, using the "Seed number from step 4. As in step 2, recalculate all pencil possibilities after each answer is added.
   6. If the puzzle can't be completed, it loops through again with a different Seed, until all 9 numbers are tried.
   7. If the puzzle doesn't work with any Seed, it reloads back to step one, with a new initial box.
+  
+## User Interface
+
+The user interface is created with HTML, CSS, and Typescript, one file of each. The main layout is a table, with nine rows and nine columns. Within each cell (<td>), there is another table for "penciling" in answers, and a larger input field, overlaying the small table. The pencil toggle button brings the small table to the forefront (z-index), and there is a numbered button 1-9 for each possibility.
