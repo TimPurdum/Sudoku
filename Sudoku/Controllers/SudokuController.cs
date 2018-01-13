@@ -9,11 +9,11 @@ namespace Sudoku.Controllers
 {
     public class SudokuController : Controller
     {
-        int[] Integers = new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        Random Rnd = new Random();
+        readonly int[] Integers = new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        readonly Random Rnd = new Random();
         Game Game;
         int Seed;
-        List<int> UsedSeeds = new List<int>();
+        readonly List<int> UsedSeeds = new List<int>();
 
         public IActionResult Index()
         {

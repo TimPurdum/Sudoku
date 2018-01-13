@@ -54,11 +54,15 @@
                     <td class="game-cell @cellClass @guessClass row-@row  column-@column" id="box-@row-@column">
                         @if (box.Guess > 0)
                         {
-                            <input id="square-@row-@column" class="guess" style="background-color: lightgray;" disabled type="number" value="@box.Guess" />
+                            <button id="square-@row-@column" class="guess clue" style="background-color: lightgray;">
+                                @box.Guess
+                            </button>
+                            <input class="answer" id="answer-@row-@column" value="@box.Answer" type="hidden" />
                         }
                         else
                         {
                             var index = 1;
+                            <input class="answer" id="answer-@row-@column" value="@box.Answer" type="hidden"/>
                             <table class="pencil">
                                 @for (var r = 0; r < 3; r++)
                                 {
@@ -66,7 +70,7 @@
                                         @for (var c = 0; c < 3; c++)
                                         {
                                             <td class="pencil">
-                                                <button id="p-@row-@column-@index" class="btn" onclick="togglePencilMark(this, @index);">_</button>
+                                                <button id="p-@row-@column-@index" class="btn" onclick="togglePencilMark(this, @index);"></button>
                                             </td>
                                             index++;
                                         }
@@ -74,16 +78,24 @@
 
                                 }
                             </table>
-                            <input id="square-@row-@column" class="guess" type="number" value=" " 
-                                   oninput="saveGuess(@row, @column, this);" onfocus="setSquare(@row, @column);"/>
+                            <button id="square-@row-@column" class="guess"
+                                    onfocus="setSquare(@row, @column);">
+
+                            </button>
                         }
                     </td>
                 }
             </tr>
         }
     </table>
-<button id="pencil-toggle-button" class="toggle-pencil btn btn-danger" onclick="togglePencilMode(this);">
-    Pencil Toggle
-</button>
+<div style="display: flex; flex-direction: row;">
+    <button id="pencil-toggle-button" class="toggle-pencil" onclick="togglePencilMode(this);">
+        Pencil Toggle
+    </button>
+    <div style="flex: 1 0 auto;"></div>
+    <button id="check-answer-button" class="toggle-pencil" onclick="checkAnswers();">
+        Check Puzzle
+    </button>
+</div>
 </body>
 </html>
