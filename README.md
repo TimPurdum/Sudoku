@@ -1,8 +1,8 @@
 # Sudoku
 
-This will be a web-based Sudoku app built with Asp.Net Core 2.0.
+A web-based Sudoku app built with Asp.Net Core 2.0.
 
-Current Status: Builds a Sudoku puzzle layout, gives clues, playable
+Working Game at https://cedarrivertech.com/sudoku
 
 Done
 * Build
@@ -10,12 +10,13 @@ Done
 * User interface (functional, not pretty)
 * Pencil toggle
 * Keyboard shortcuts
+* Scoring
+* Decent Layout
 
 To Do
-* Scoring
 * Save games
 * Options (difficulty, hints)
-* Make it look better
+* Make it look even better
 
 ## Puzzle Creation
 
