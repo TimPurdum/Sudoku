@@ -22,6 +22,13 @@ namespace Sudoku.Controllers
                 Boxes = new List<Box>()
             };
 
+            var settings = HttpContext.Session.Get<Settings>("Settings") ?? new Settings();
+
+            if (settings.SavedGame != null)
+            {
+                return View(settings);
+            }
+
             try
             {
                 CreateBoxes();
@@ -58,11 +65,11 @@ namespace Sudoku.Controllers
                 return RedirectToAction("Index");
             }
 
-            
+            SetClues(settings.Difficulty);
+            settings.SavedGame = Game;
+            HttpContext.Session.Set("Settings", settings);
 
-            SetClues("easy");
-
-            return View(Game);
+            return View(settings);
         }
 
         void CreateBoxes()
@@ -143,29 +150,76 @@ namespace Sudoku.Controllers
             return PencilBoxes(boxes);
         }
 
-        void SetClues(string difficulty)
+        void SetClues(Difficulty difficulty)
         {
             var reveal = 40;
             switch (difficulty)
             {
-                case "easy":
+                case Difficulty.Easy:
                     reveal = 40;
                     break;
-                case "medium":
+                case Difficulty.Medium:
                     reveal = 30;
                     break;
-                case "hard":
+                case Difficulty.Hard:
                     reveal = 20;
                     break;
             }
 
-            foreach (Box box in Game.Boxes)
+            foreach (var box in Game.Boxes)
             {
                 if (Rnd.Next(100) < reveal)
                 {
                     box.Guess = box.Answer;
                 }
             }
+        }
+
+        public void SavePencil(int row, int column, int index, bool marked)
+        {
+            var settings = HttpContext.Session.Get<Settings>("Settings");
+            var game = settings.SavedGame;
+            var box = game.Boxes.Single(b => b.Row == row && b.Column == column);
+            if (box.Pencil.Contains(index) && !marked)
+            {
+                box.Pencil.Remove(index);
+            }
+            else if (!box.Pencil.Contains(index) && marked)
+            {
+                box.Pencil.Add(index);
+            }
+            HttpContext.Session.Set("Settings", settings);
+        }
+
+        public void SaveGuess(int row, int column, int guess)
+        {
+            var settings = HttpContext.Session.Get<Settings>("Settings");
+            var game = settings.SavedGame;
+            var box = game.Boxes.Single(b => b.Row == row && b.Column == column);
+            if (box.Guess != guess)
+            {
+                box.Guess = guess;
+            }
+            HttpContext.Session.Set("Settings", settings);
+        }
+
+        public IActionResult NewGame(Difficulty difficulty)
+        {
+            var settings = HttpContext.Session.Get<Settings>("Settings");
+            settings.Difficulty = difficulty;
+            settings.SavedGame = null;
+            HttpContext.Session.Set("Settings", settings);
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult ToggleDarkMode()
+        {
+            var settings = HttpContext.Session.Get<Settings>("Settings");
+            settings.DarkMode = !settings.DarkMode;
+            HttpContext.Session.Set("Settings", settings);
+
+            return RedirectToAction("Index");
         }
     }
 }

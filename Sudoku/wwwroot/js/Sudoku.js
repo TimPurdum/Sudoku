@@ -8,6 +8,7 @@ function togglePencilMark(box, index) {
     else {
         box.innerHTML = index.toString();
     }
+    savePencil(box);
 }
 function togglePencilMode(button) {
     const pencilTables = document.querySelectorAll('table');
@@ -33,6 +34,7 @@ function togglePencilMode(button) {
     pencilMode = !pencilMode;
 }
 function saveGuess(row, column, guess) {
+    var value = 0;
     if (guess.innerText === '') {
         eraseGuess(guess);
     }
@@ -40,7 +42,13 @@ function saveGuess(row, column, guess) {
         guess.style.backgroundColor = 'white';
         guess.style.color = 'black';
         guess.style.zIndex = '5';
+        value = Number.parseInt(guess.value);
     }
+    $.post('saveguess', {
+        "row": row,
+        "column": column,
+        "guess": value
+    });
 }
 function eraseGuess(guess) {
     const pencilTable = guess.parentElement.firstElementChild;
@@ -157,4 +165,18 @@ function checkAnswers() {
             g.style.backgroundColor = 'rgb(255, 150, 150)';
         }
     }
+}
+function savePencil(box) {
+    var id = box.id;
+    var elements = id.split('-');
+    var r = Number.parseInt(elements[1]);
+    var c = Number.parseInt(elements[2]);
+    var i = Number.parseInt(elements[3]);
+    var marked = box.value == i.toString();
+    $.post('savepencil', {
+        "row": r,
+        "column": c,
+        "index": i,
+        "marked": marked
+    });
 }

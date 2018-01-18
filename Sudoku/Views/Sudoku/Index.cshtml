@@ -1,11 +1,20 @@
-﻿@model Game
+﻿@model Settings
 @{
     ViewData["Title"] = "Index";
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <title>Sudoku</title>
+
+    @if (Model.DarkMode)
+    {
+        <link rel="stylesheet" href="~/css/dark.css" />
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/css/site.css" />
+    }
     <script src="~/js/Sudoku.js"></script>
 </head>
 <body>
@@ -43,7 +52,7 @@
                                     cellClass = "end";
                                     break;
                             }
-                            var box = Model.Boxes.Single(b => b.Row == row && b.Column == column);
+                            var box = Model.SavedGame.Boxes.Single(b => b.Row == row && b.Column == column);
                             var guess = box.Guess.ToString();
                             var guessClass = "preset";
                             if (guess == "0")
@@ -88,14 +97,16 @@
             </tr>
         }
     </table>
-<div style="display: flex; flex-direction: row;">
-    <button id="pencil-toggle-button" class="toggle-pencil" onclick="togglePencilMode(this);">
-        Pencil Toggle
-    </button>
-    <div style="flex: 1 0 auto;"></div>
-    <button id="check-answer-button" class="toggle-pencil" onclick="checkAnswers();">
-        Check Puzzle
-    </button>
-</div>
+    <div style="display: flex; flex-direction: row;">
+        <button id="pencil-toggle-button" class="toggle-pencil" onclick="togglePencilMode(this);">
+            Pencil Toggle [space]
+        </button>
+        <div style="flex: 1 0 auto;"></div>
+        <a id="dark-mode-button" class="toggle-pencil" asp-action="ToggleDarkMode">Dark/Light</a>
+        <div style="flex: 1 0 auto;"></div>
+        <button id="check-answer-button" class="toggle-pencil" onclick="checkAnswers();">
+            Check Puzzle
+        </button>
+    </div>
 </body>
 </html>

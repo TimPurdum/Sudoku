@@ -9,6 +9,7 @@ function togglePencilMark(box: HTMLButtonElement, index: number) {
     } else {
         box.innerHTML = index.toString();
     }
+    savePencil(box);
 }
 
 function togglePencilMode(button: HTMLButtonElement) {
@@ -36,13 +37,23 @@ function togglePencilMode(button: HTMLButtonElement) {
 }
 
 function saveGuess(row: number, column: number, guess: HTMLButtonElement) {
+    var value = 0;
+    
     if (guess.innerText === '') {
         eraseGuess(guess);
     } else {
         guess.style.backgroundColor = 'white';
         guess.style.color = 'black';
         guess.style.zIndex = '5';
+        value = Number.parseInt(guess.value);
     }
+
+    $.post('saveguess',
+        {
+            "row": row,
+            "column": column,
+            "guess": value
+        });
 }
 
 function eraseGuess(guess: HTMLButtonElement) {
@@ -72,8 +83,6 @@ function setSquare(r: number, c: number) {
             }
         }
     }
-
-    
 }
 
 document.addEventListener('keydown', (e) => {    
@@ -166,4 +175,21 @@ function checkAnswers() {
             g.style.backgroundColor = 'rgb(255, 150, 150)';
         }
     }
+}
+
+function savePencil(box: HTMLButtonElement) {
+    var id = box.id;
+    var elements = id.split('-');
+    var r = Number.parseInt(elements[1]);
+    var c = Number.parseInt(elements[2]);
+    var i = Number.parseInt(elements[3]);
+    var marked = box.value == i.toString();
+
+    $.post('savepencil',
+        {
+            "row": r,
+            "column": c,
+            "index": i,
+            "marked": marked
+        });
 }

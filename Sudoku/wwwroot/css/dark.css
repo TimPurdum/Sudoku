@@ -1,4 +1,9 @@
-﻿.table {
+﻿body {
+    background-color: rgb(30, 30, 30);
+    color: rgb(200, 200, 200);
+}
+
+.table {
     table-layout: fixed;
     border-collapse: collapse;
     border-spacing: 0;
@@ -23,34 +28,34 @@
     margin: 0;
     
     position: relative;
-    border: 1px solid black;
+    border: 1px solid white;
 }
 
 
 tr.top {
-    border-top: thick solid black;
-    border-bottom: thin solid black;
+    border-top: thick solid white;
+    border-bottom: thin solid white;
 }
 
 tr.bottom {
-    border-bottom: thick solid black;
+    border-bottom: thick solid white;
 }
 
 tr.center {
-    border-bottom: thin solid black;
+    border-bottom: thin solid white;
 }
 
 td.start {
-    border-left: thick solid black;
-    border-right: thin solid black;
+    border-left: thick solid white;
+    border-right: thin solid white;
 }
 
 td.end {
-    border-right: thick solid black;
+    border-right: thick solid white;
 }
 
 td.center {
-    border-right: thin solid black;
+    border-right: thin solid white;
 }
 
 td.preset {
@@ -66,7 +71,8 @@ table.pencil {
     padding: 0;
     margin: 0;
     border-collapse: collapse;
-    border: 1px solid black;
+    border: 1px solid white;
+    background-color: white;
 }
 
 tr.pencil {
@@ -82,29 +88,29 @@ td.pencil {
     position: relative;
 }
 
-td.pencil .btn {
-    padding: 0;
-    text-align: center;
-    width: 18px;
-    height: 18px;
-    font-size: 12px;
-    line-height: 12px;
-    border: none;
-    margin: 0;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: white;
-}
+    td.pencil .btn {
+        padding: 0;
+        text-align: center;
+        width: 18px;
+        height: 18px;
+        font-size: 12px;
+        line-height: 12px;
+        border: none;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgb(200, 200, 200);
+    }
 
 .guess {
     min-width: unset;
     width: 60px;
     height: 60px;
     text-align: center;
-    border: 1px solid black;
+    border: 1px solid white;
     font-size: 40px;
     font-weight: bold;
     line-height: 40px;
